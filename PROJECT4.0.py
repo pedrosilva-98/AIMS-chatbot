@@ -579,6 +579,7 @@ def get_horario_atualizado_tool():
     - Salas de aula
     - Horas de inicio e fim
     - Calendário académico
+    ATENÇÂO TODAS AS PERGUNTAS QUE ENVOLVEREM DAR OS DIAS DA SEMANA DEVES DÁ-LOS POR ORDEM. A ordem é a seguinte [Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira]
     """
     return scrape_horario(number, password)
 
