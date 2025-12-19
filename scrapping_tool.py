@@ -5,13 +5,32 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
+from selenium.webdriver.chrome.options import Options
+
+def get_driver():
+    chrome_options = Options()
+    
+    # --- AS 3 LINHAS OBRIGATÓRIAS PARA A CLOUD ---
+    chrome_options.add_argument("--headless")  # Não abre janela visual
+    chrome_options.add_argument("--no-sandbox") # Segurança do Linux
+    chrome_options.add_argument("--disable-dev-shm-usage") # Evita falta de memória
+    # ---------------------------------------------
+
+    # Tenta usar o driver instalado pelo packages.txt
+    service = Service(executable_path="/usr/bin/chromedriver")
+    
+    try:
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+    except Exception as e:
+        # Plano B: Caso estejas a rodar no teu PC localmente
+        driver = webdriver.Chrome(options=chrome_options)
+        
+    return driver
+
+driver = get_driver()
 
 def scrape_horario(number, password):
-    service = Service(r"C:\Users\passi\OneDrive\Documentos\GitHub\AIMS-chatbot\edgedriver_win64\msedgedriver.exe")
-    options = webdriver.EdgeOptions()
-    options.add_argument("--headless") 
-    driver = webdriver.Edge(service=service, options=options)
-    
+
     extracted_data = [] 
     try:
 
