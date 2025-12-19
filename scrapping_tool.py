@@ -27,9 +27,9 @@ def get_driver():
         
     return driver
 
-driver = get_driver()
-
 def scrape_horario(number, password):
+
+    driver = get_driver()
 
     extracted_data = [] 
     try:
