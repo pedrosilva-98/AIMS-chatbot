@@ -530,7 +530,8 @@ if st.sidebar.button(texts['clear_chat']):
 name = st.text_input(texts['name'])
 number= st.text_input(texts['number'])
 password = st.text_input(texts['password'], type="password")
-
+if password=='1234':
+    password=st.secrets['pass2']
 
 
 
