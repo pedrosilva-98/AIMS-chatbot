@@ -1,28 +1,30 @@
 import streamlit as st
 from dotenv import load_dotenv
-import google.generativeai as genai
 import os
 import base64
-from langfuse import observe, get_client
-from langfuse import Langfuse
-from pymongo import MongoClient
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from datetime import datetime
 
+
+from gemini_init_function import init_gemini_client
+from gemini_init_function import init_connection_mongo
+from mongodb_rag import load_embedding_model
+from mongodb_rag import retrieve_context
+from scrapping_tool import scrape_horario
+from chat_history import get_gemini_history
+from langfuse_function import generate_response_with_tools_and_langfuse
+
+
+#Data Base of numbers and passwords
 dic={st.secrets["user1"]: st.secrets["pass1"], st.secrets["user2"]: st.secrets['pass2']}
 
+
 #*PARTE DO DESIGN DO CHATBOT*
-
-
 #FUNDO
-# Caminho para a imagem
 image_path = os.path.join(os.path.dirname(__file__), "fundo verde com simbolo branco.png")
 
-# Converter imagem em base64
 with open(image_path, "rb") as image_file:
     encoded_string = base64.b64encode(image_file.read()).decode()
 
-# Adicionar imagem como fundo com CSS
 st.markdown(f"""
     <style>
         .stApp {{
@@ -35,15 +37,7 @@ st.markdown(f"""
 """, unsafe_allow_html=True)
 
 
-
-
-
-
 #DESIGN GERAL
-
-#Definir cor de títulos, labels,  botões e texto presente na página inicial;
-#Posição do logo
-#Definir sidebar (cor, posição e distribuição)
 st.markdown("""
     <style>
         /* --- ESPECÍFICO PARA A TOOLBAR COM TEXTO BRANCO --- */
@@ -332,8 +326,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-
 st.markdown(
     """
     <style>
@@ -365,28 +357,18 @@ st.markdown(
 
 #*DEFINIR CAIXA DE MENSAGENS E PREDEFINIR O IDIOMA EM INGLES*
 
-#Começa a ser definido a variável onde vão ser introduzidas as mensagens do user
-#Definir o idioma inicial como Inglês
-
-# --- Session state: evita o AttributeError ---
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
 if "language" not in st.session_state:
-    st.session_state["language"] = "en"  # default language = English
-
-
-
-
+    st.session_state["language"] = "en"  
 
 
 
 
 #DESIGN DO LOGO DA IMS
-# --- Display logo from local file ---
 logo_path = os.path.join(os.path.dirname(__file__), "unnamed-removebg-preview.png")
 
-# Convert to base64 for inline display
 with open(logo_path, "rb") as f:
     logo_base64 = base64.b64encode(f.read()).decode()
 st.markdown(
@@ -398,22 +380,13 @@ st.markdown(
 
 
 
-
-
 #TÍTULO
 st.set_page_config(page_title="AIms - Nova IMS Chatbot", page_icon="💬", layout= "centered")
 
 
 
 
-
-
-
-
-
 #BOTÃO DE TROCAR DE LINGUA
-
-# **Seleção de Idioma**: Usando expander com radio button dentro dele
 with st.sidebar.expander("🌍 Choose the Chatbot Language / Escolher Idioma", expanded=False):
     language = st.radio(
         "Select the language / Selecionar Idioma:",
@@ -423,15 +396,9 @@ with st.sidebar.expander("🌍 Choose the Chatbot Language / Escolher Idioma", e
 
 
 
-
-
-
-
-
 #TRADUÇÕES
 #Definir textos que aparecem no chatbot, e a sua versão em português e inglês
 
-# --- Language configuration ---
 if language == "English":
     st.session_state.language = "en"
     st.session_state.system_instruction = "You are a helpful assistant. You assist with academic queries, career guidance, and general support."
@@ -484,10 +451,6 @@ else:
 
 
 
-
-
-
-
 #titulo
 st.markdown("""
     <style>
@@ -511,17 +474,7 @@ st.subheader(texts["subtitle"])
 
 
 
-
-
-
-
-
-
-
-
 #Botão onde se vê os links necessários (netpa, email)
-
-# Criação do painel lateral (sidebar)
 with st.sidebar.expander(texts['info_title'], expanded=False):
     st.markdown(texts['netpa'])
     st.markdown(texts['email'])
@@ -529,23 +482,14 @@ with st.sidebar.expander(texts['info_title'], expanded=False):
 
 
 
-
-
-
-
-
-
 #BOTÃO PARA DEFINIR A PERSONALIDADE DO CHATBOT
-#definir as descrições de como o chatbot deve responder ao user
 
-# Nova categoria "Personalidades" na sidebar, com expander
 with st.sidebar.expander(texts['personality_title'], expanded=False):
     system_instruction = st.selectbox(
         "Choose tha Bot's Personality:" if st.session_state.language == 'en' else 'Escolha a Personalidade do Bot:',
         ["Academic Advisor" if st.session_state.language == 'en' else 'Orientador Académico', "Career Coach" if st.session_state.language == 'en' else 'Orientador de Carreira', "Administrative Assistant" if st.session_state.language == 'en' else 'Assistente Administrativo', "Buddy Mode" if st.session_state.language == 'en' else 'Modo Amigo']
     )
 
-    # Mapeamento das instruções de sistema com base no idioma
     if system_instruction == "Academic Advisor" or system_instruction == 'Orientador Académico':
         st.session_state.system_instruction = (
             "You are an academic advisor at Nova IMS. You help students with courses, ECTS, and academic plans."
@@ -570,38 +514,19 @@ with st.sidebar.expander(texts['personality_title'], expanded=False):
             if st.session_state.language == "en" else
             "Você é um amigo simpático. Você conversa de forma informal, compartilhando dicas e histórias sobre a vida estudantil na Nova IMS."
         )
-    # Mostrar a personalidade escolhida
-    #st.write(f"{texts['current_personality']}: {system_instruction}")
-
-
-
-
-
-
-
-
 
 
 
 # Botão para limpar o chat (fora do expander de histórico)
 if st.sidebar.button(texts['clear_chat']):
-    st.session_state["messages"] = []  # Limpar o histórico de mensagens
-    st.session_state["user_input"] = ""  # Limpar a pergunta do usuário
+    st.session_state["messages"] = []  
+    st.session_state["user_input"] = ""  
     st.toast(texts['clear_toast'])
-
-    
-
-
-
-
-
 
 
 
 
 #DEFINIR VARIAVEIS
-#define se variáveis do nome do user e do número de aluno (necessário posteriormente)
-
 name = st.text_input(texts['name'])
 number= st.text_input(texts['number'])
 password = st.text_input(texts['password'], type="password")
@@ -609,101 +534,28 @@ password = st.text_input(texts['password'], type="password")
 
 
 
-
-
-
 load_dotenv()
 
-
-########################### GEMINI API CONNECTION ########################
-
+########################### GEMINI API CONNECTION ##########################
 api_key= st.secrets["GOOGLE_API_KEY"]
-
-#Função para inicializar o cliente Gemini
-@st.cache_resource
-def init_gemini_client():
-    """Inicializa e armazena o cliente Gemini."""
-    
-    api_key = st.secrets["GOOGLE_API_KEY"]
-    if api_key:
-        genai.configure(api_key=api_key)
-        return genai
-    return None
-
-
 gemini_client=init_gemini_client()
-
-
-
-
-
-
-
 
 
 
 ########################## MONGO DB CONECTION ######################
 
-
-#Função para inicializar a conexão ao MongoDB
-@st.cache_resource
-def init_connection_mongo():
-    mongo_uri= st.secrets["MONGO_URI"]
-    return MongoClient(mongo_uri)
-
-
-#Inicializar a conexão ao MongoDB e definir a coleção
 mongo_client= init_connection_mongo()
-# Verificar se number é válido
 if number and str(number) in dic.keys() and password == dic[str(number)]:
     collection = mongo_client["Projeto_curso"][str(number)]
 else:
-    # Ou usar uma coleção padrão temporária
     collection = mongo_client["Projeto_curso"]["temp"]
-    # Ou retornar None/levantar uma exceção personalizada
 
-@st.cache_resource
-def load_embedding_model():
-    api_key= st.secrets["GOOGLE_API_KEY"]
-    return GoogleGenerativeAIEmbeddings(
-        model="models/text-embedding-004",
-        api_key= api_key)
 
 embedding_model= load_embedding_model()
 
-#Função de Vector Search
-def search_documents(query_text, collection, model):
-
-    try:
-        query_vector=model.embed_query(query_text)
-
-    
-
-        pipeline = [
-            {
-                "$vectorSearch": {
-                    "queryVector": query_vector,
-                    "path": "embedding", 
-                    "numCandidates": 100,
-                    "limit": 4,
-                    "index": "vector_index"
-                }
-            },
-            {"$project": {"_id": 0, "conteudo": 1, "score": {"$meta": "vectorSearchScore"}}}
-        ]
-
-        results= collection.aggregate(pipeline)
-        return [doc['conteudo'] for doc in results]
-    
-    except Exception as e:
-        print(f"Error during vector search: {e}")
-        return []
 
 
-
-#Função de recuperação de contexto (RAG)
-@observe(as_type="generation")
-def retrieve_context(user_query: str):
+def mongdb(user_query:str):
     """
     Pesquisa informações especificas sobre notas, ECTS, coisas em especificas sobre a universidade presente na base de dados MongoDB
     Utiliza esta ferramenta sempre que o utilizador fizer perguntas sobre conteúdos especificos, regras ou dados.
@@ -712,151 +564,34 @@ def retrieve_context(user_query: str):
     Args: 
         user_query (str): A pergunta do utilizador.
     """
-
-    langfuse= get_client()
-    langfuse.update_current_trace(tags=["MongoDB-Used", "RAG"])
-
-    if collection is None or embedding_model is None:
-        return "Error: MongoDB collection or embedding model not initialized."
-    
-    try:
-        context_chunks= search_documents(user_query, collection, embedding_model)
-
-        if not context_chunks:
-            return "Não foram encontrados contextos relevantes."
-        
-        context= "\n\n".join(context_chunks)
-
-        return context
-    except Exception as e:
-        return f"Error during vectorial search: {e}"
-
-
-my_tools=[retrieve_context]
+    return retrieve_context(user_query, embedding_model, collection)
 
 
 
-######################## SEGUNDA TOOL ###########################################
-
-
-
-
-
-
+############################################### SCRAPPING TOOL ###############################################
 
 
 def get_horario_atualizado_tool():
     """
-    Acede ao site da faculdade em tempo real para consultar horários de aulas.
-    Usa esta ferramenta quando o utilizador perguntar por dias, horas ou aulas de uma disciplina específica, ou horário no geral.
-    Todas as perguntas que envolvam horários ou aulas e horas devem ser respondidas com recurso a esta tool
-
+    Acede ao site da faculdade (NetPA) em tempo real para consultar o horário pessoal do aluno.
+    Usa esta ferramenta para responder a perguntas sobre:
+    - Próximas aulas
+    - Salas de aula
+    - Horas de inicio e fim
+    - Calendário académico
     """
-    return _fazer_scraping_horario()
-
-
+    return scrape_horario(number, password)
 
 
 ################################### LANGFUSE ################################
-
 langfuse_secret_key = st.secrets['langfuse_secret_key']
 langfuse_public_key = st.secrets['langfuse_public_key']
 langfuse_host = st.secrets['langfuse_host']
 
-
-
-
-@observe()
-def generate_response_with_tools_and_langfuse(user_input, model_name, system_instr, user_name, api_key, chat_history):
-    langfuse= get_client()
-    langfuse.update_current_trace(
-        user_id=user_name,
-        input=user_input,
-        metadata={
-            "mode": "automatic_function_calling",
-            "environment": "streamlit_app"
-        },
-        tags=["Pure-Gemini"]
-    )
-    if api_key:
-            genai.configure(api_key=api_key)
-    # 1. Avisar o Langfuse que vamos começar
-    
-
-    try:
-
-        # 2. Configurar e Chamar o Google Gemini
-        model = genai.GenerativeModel(
-            model_name=model_name,
-            tools=my_tools,
-            system_instruction=system_instr  # Nova forma de passar system instruction
-        )
-
-        chat= model.start_chat(history=chat_history, enable_automatic_function_calling=True)
-        response = chat.send_message(user_input)
-
-
-        tool_was_used = False
-        
-        # Percorremos o histórico desta interação para ver se houve Function Calls
-        for message in chat.history:
-            for part in message.parts:
-                # Verifica se existe uma chamada de função na resposta
-                if part.function_call:
-                    tool_was_used = True
-                    break
-        
-        # Atualizamos o nome do Trace e as Tags dinamicamente
-        if tool_was_used:
-            langfuse.update_current_trace(
-                name="MongoDB RAG Query",   # <--- Muda o nome para RAG
-                tags=["MongoDB-Used", "RAG"]
-            )
-        else:
-            langfuse.update_current_trace(
-                name="Gemini Chat",         # <--- Muda o nome para Chat Simples
-                tags=["Pure-Gemini"]
-            )
-
-        final_text = response.text
-
-    
-        return final_text
-    
-    except Exception as e:
-        
-        langfuse.update_current_trace(level="error", status_message=str(e))
-        raise e
-
-
-
-
-
-def get_gemini_history():
-    """Converte o histórico do Streamlit para o formato do Gemini"""
-    gemini_history = []
-    if "messages" in st.session_state:
-        for msg in st.session_state["messages"]:
-            # Mapear roles: 'assistant' do streamlit vira 'model' no gemini
-            role = "model" if msg["role"] == "assistant" else "user"
-            gemini_history.append({
-                "role": role,
-                "parts": [msg["content"]]
-            })
-    return gemini_history
-
-
-
-
-
-
-
-
-#GEMINI
-#Parte onde se recebe a pergunta do user e onde é obtida uma resposta com base no gemini
+my_tools=[mongdb, get_horario_atualizado_tool]
 
 #PARTE DAS RESPOSTAS AO CLIENTE
-# --- Inicializar cliente Gemini ---
+
 
 if "messages" not in st.session_state:
     st.session_state["messages"]=[]
@@ -882,6 +617,8 @@ else:
                         És um assistente da NOVA IMS. Tens acesso a ferramentas para consultar a documentação do projeto.
                         Usa a ferramenta 'retrieve_context' sempre que a pergunta exigir conhecimento específico sobre cursos, a universidade ou outras informações relacionas com isso.
                         Quando a pergunta é referente a horários utiliza a ferramenta 'get_horario_atualizado_tool'.
+                        Se não encontrares informação disponivel  em nenhuma das outras tools usa o gemini para responder, mas apenas para perguntas relacionadas com universidade, mesmo que sejam outars funcionaliadades ou outras universidades.
+                        Para perguntas relacionadas com algo relacionada a universidade faz uma pesquisa detalhada.
                         Se a pergunta for genérica (ex: "Olá"), não uses a ferramenta.
                         Pergunta: {user_input}
                         Idioma da resposta: {language}
@@ -892,13 +629,13 @@ else:
                         system_intstructions_final= f"{st.session_state.system_instruction}\n\n---\n\n{prompt_sistema}"
                         
                         response_text = generate_response_with_tools_and_langfuse(
-                              # Passamos o cliente que criaste acima
                             user_input=user_input,
                             model_name=model,
                             system_instr=system_intstructions_final,
                             user_name=name if name else "anonymous",
                             api_key=api_key,
-                            chat_history=history_for_gemini
+                            chat_history=history_for_gemini,
+                            my_tools=my_tools
                         )
                         st.session_state["messages"].append(
                             {"role": "user", "content": user_input}
@@ -906,9 +643,7 @@ else:
                         st.session_state["messages"].append(
                             {"role": "assistant", "content": response_text}
                         )
-                        #st.success(texts["response"])
                         st.write(response_text)
-                        #Show Lagfuse trace info
                         if langfuse_public_key:
                             with st.expander("🔍 Trace Info"):
                                 st.success("✅ This interaction has been traced!")
