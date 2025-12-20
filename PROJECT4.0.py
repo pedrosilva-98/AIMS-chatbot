@@ -629,6 +629,13 @@ else:
                         Contexto temporal: 
                         - Data e hora atual: {datetime.now().strftime("%A, %d/%m/%Y às %H:%M")}
                         - Usa esta informação para perguntas que precisem de contexto temporal como como "hoje", "amanhã", "esta semana" ou "já passou o prazo?".
+                        ATENÇÂO: TODAS AS PERGUNTAS QUE ENVOLVEREM DAR OS DIAS DA SEMANA DEVES DÁ-LOS POR ORDEM.
+                        A ordem é a seguinte [Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira] ou [Monday, Tuesday, Wednesday, Thursday, Friday]
+                        Segue sempre ista ordem para qualquer pergunta em que a resposta envolva mais do que um dia, esta informação deve ser prioritária à organizçaõ por hora.
+                        ATENÇÃO: Quando a pergunta for sobre ECTS deves retornar os ECTS aprovados:
+                        - se a pergunta for ECTS feitos, ou aprovados
+                        - se for ECTS inscritos deves responder aqueles ECTS em que o user está inscrito
+                        - Deves também seguir a ordem cronológica em todas as respostas (Se a resposta envolver anos deves responder pela seguinte ordem: 2022, 2023, 2024, 2025, 2026)
                         """
                         system_intstructions_final= f"{st.session_state.system_instruction}\n\n---\n\n{prompt_sistema}"
                         
