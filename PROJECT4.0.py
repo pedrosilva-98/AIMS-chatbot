@@ -5,13 +5,13 @@ import base64
 from datetime import datetime
 
 
-from gemini_init_function import init_gemini_client
-from gemini_init_function import init_connection_mongo
-from mongodb_rag import load_embedding_model
-from mongodb_rag import retrieve_context
-from scrapping_tool import scrape_horario
-from chat_history import get_gemini_history
-from langfuse_function import generate_response_with_tools_and_langfuse
+from utils.gemini_init_function import init_gemini_client
+from utils.gemini_init_function import init_connection_mongo
+from tools.mongodb_rag import load_embedding_model
+from tools.mongodb_rag import retrieve_context
+from tools.scrapping_tool import scrape_horario
+from utils.chat_history import get_gemini_history
+from utils.langfuse_function import generate_response_with_tools_and_langfuse
 
 
 #Data Base of numbers and passwords
