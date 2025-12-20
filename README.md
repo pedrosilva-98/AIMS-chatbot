@@ -53,16 +53,16 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 ### Layer Structure
 
     UI Layer: 
-        - Streamlit: handles user input, chat session state management and manages authentication via student number/ password verification.
+    - Streamlit: handles user input, chat session state management and manages authentication via student number/ password verification.
 
     Service Layer: Initializates connections, manages the chat history and coordinates the flow between UI and AI.
 
     AI Layer: 
-        - Google Gemini: manages system prompts, handles context window limits and integrates Langfuse for tracing and monitoring model performance. (gemini_init_function.py, langfuse_function.py)
+    - Google Gemini: manages system prompts, handles context window limits and integrates Langfuse for tracing and monitoring model performance. (gemini_init_function.py, langfuse_function.py)
 
     Tools Layer: 
-        - Vector Store: MongoDB Atlas stores embedding of Nova IMS documents for RAG operations (mongodb_rag.py)
-        - Web Scraper: Selenium based tool that performs real-time authentication on the NetPA portal to retrieve live schedule data. (scrapping_tool.py)
+    - Vector Store: MongoDB Atlas stores embedding of Nova IMS documents for RAG operations (mongodb_rag.py)
+    - Web Scraper: Selenium based tool that performs real-time authentication on the NetPA portal to retrieve live schedule data. (scrapping_tool.py)
 
 ### Key Design Decisions and Justifications
 
@@ -79,26 +79,30 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 ## Installation & Setup
 
 ### Prerequisites
-- Python 3.x
-- API keys for [required services]
+- Python 3.10 or higher
+- Google Chrome or Microsoft Edge installed
+- API keys for required services:
+    - present is Required enviroment variables
 
 ### Installation Steps
 
 1. Clone the repository:
 ```bash
-git clone pedrosilva-98/AIMS-chatbot
+git clone https://github.com/pedrosilva-98/AIMS-chatbot.git
 cd AIMS-Chatbot
 ```
 
 2. Install dependencies:
+This project uses 'requirements.txt' fileto manage all library dependencies
 ```bash
 uv sync
+uv pip install -r requirements.txt
 ```
 
 3. Set up environment variables:
 ```bash
 cp .env.example .env
-# Edit .env with your API keys
+# Past the Requirement variables 
 ```
 
 **Required environment variables:**
@@ -111,8 +115,8 @@ GOOGLE_API_KEY= "AIzaSyDaUlrumleZCduEYmFfzhYzEM3T7qzX0tM"
 
 MONGO_URI= "mongodb+srv://chatbot_user:PapiPauligol@cluster0.zf2kzct.mongodb.net/?appName=Cluster0"
 
-**Database with Student Numbers and Password**
-- Only we can use the app
+user2='20231681'
+pass2='Capstoneproject123!'
 ```
 
 4. Run the application:
@@ -122,19 +126,21 @@ uv run streamlit run PROJECT4.0.py
 
 ## Usage
 
-Instructions and examples for using your application. Include:
-- How to navigate the interface
-- Key workflows
-- Screenshots or GIFs demonstrating functionality (recommended for visual clarity)
+Authentication: 
+- Name: your name
+- Student Number: Enter a valid student number from the database
+- Password: Enter the corresponding password
 
-**Example:**
+Sidebar:
+- Language: switch language
+- Personality: switch chatbot personality
+- External links: Quich access to NetPA and NOVA IMS webmail
 
-1. Navigate to the main page
-2. Upload a document or enter your query
-3. Interact with the AI assistant through the chat interface
-4. View results and explore additional features
+AI:
+- Type the query
 
-*Add screenshots or GIFs here to visually demonstrate your application's key features*
+<img src="assets/AIresponse.png" alt="Interface de Login" width="700">
+
 
 ## Deployment
 
@@ -142,8 +148,6 @@ Instructions and examples for using your application. Include:
 
 **Deployment Platform:** 
 Streamlit Community Cloud: Hosting platform for the application
-
-Instructions for deploying your own instance (if applicable).
 
 ## Project Structure
 
@@ -160,8 +164,6 @@ project-root/
 └── README.md             # This file
 ```
 
-**Note:** Component-level READMEs (e.g., `services/README.md`, `tools/README.md`) are recommended if those components need detailed explanation.
-
 ## Team
 
 - Team Member 1 - [Role/Responsibilities]
@@ -169,19 +171,13 @@ project-root/
 - Team Member 3 - [Role/Responsibilities]
 - Team Member 4 - [Role/Responsibilities]
 
-## License
-
-[Your chosen license - MIT, Apache, etc. - not necessary]
-
 ---
 
 ## What Makes a Good README?
 
 Your README should answer:
-- **What** does this application do?
-- **Why** does it exist / what problem does it solve?
+
 - **How** do I run it locally?
 - **Who** built it?
 
-Keep it clear, organized, and professional. This is often the first thing evaluators and potential users will see.
 

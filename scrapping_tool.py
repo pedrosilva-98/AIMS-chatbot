@@ -10,19 +10,16 @@ from selenium.webdriver.chrome.options import Options
 def get_driver():
     chrome_options = Options()
     
-    # --- AS 3 LINHAS OBRIGATÓRIAS PARA A CLOUD ---
-    chrome_options.add_argument("--headless")  # Não abre janela visual
-    chrome_options.add_argument("--no-sandbox") # Segurança do Linux
-    chrome_options.add_argument("--disable-dev-shm-usage") # Evita falta de memória
-    # ---------------------------------------------
+    chrome_options.add_argument("--headless") 
+    chrome_options.add_argument("--no-sandbox") 
+    chrome_options.add_argument("--disable-dev-shm-usage") 
 
-    # Tenta usar o driver instalado pelo packages.txt
     service = Service(executable_path="/usr/bin/chromedriver")
     
     try:
         driver = webdriver.Chrome(service=service, options=chrome_options)
     except Exception as e:
-        # Plano B: Caso estejas a rodar no teu PC localmente
+
         driver = webdriver.Chrome(options=chrome_options)
         
     return driver
@@ -34,7 +31,7 @@ def scrape_horario(number, password):
     extracted_data = [] 
     try:
 
-        print("🚀 [Bot] A iniciar browser...")
+        print("[Bot] A iniciar browser...")
         driver.get('https://netpa.novaims.unl.pt/netpa/page?stage=difhomestage')
         
         try: WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.ID, "notificacoesNetpa_OK-btnEl"))).click()
@@ -42,7 +39,7 @@ def scrape_horario(number, password):
         try: WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Aceitar todos')]"))).click()
         except: pass
 
-        print("🔑 [Bot] Login...")
+        print("[Bot] Login...")
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "loginregisterLink"))).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//input[contains(@placeholder, 'utilizador')]"))).send_keys(str(number))
         driver.find_element(By.XPATH, "//input[contains(@placeholder, 'palavra-chave')]").send_keys(str(password))
@@ -50,7 +47,7 @@ def scrape_horario(number, password):
         driver.execute_script("arguments[0].click();", WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Entrar')]"))))
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "menuItemLink")))
         
-        print("📍 [Bot] A abrir Horário...")
+        print("[Bot] A abrir Horário...")
         link = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//a[contains(text(), 'Horário')]")))
         driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", link)
         driver.execute_script("arguments[0].click();", link)
