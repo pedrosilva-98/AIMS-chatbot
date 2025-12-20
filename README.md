@@ -165,10 +165,10 @@ project-root/
 ```
 
 ## Team
-David: Google Gemini integration and management of the API key.
-Bernardo: Integration of MongoDB and implementation of RAG.
-Pedro: Responsible for Streamlit UI and Langfuse.
-Inês: Deployment on Streamlit Cloud.
+- David: Google Gemini integration and management of the API key.
+- Bernardo: Integration of MongoDB and implementation of RAG.
+- Pedro: Responsible for Streamlit UI and Langfuse.
+- Inês: Deployment on Streamlit Cloud.
 
 
 ---
