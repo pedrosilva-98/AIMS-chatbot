@@ -166,7 +166,8 @@ project-root/
 │   └── gemini_init_function.py
 │   └── langfuse_function.py                 
 ├── docs/
-│   └── ARCHITECTURE.md    
+│   └── ARCHITECTURE.md
+├── gitignore    
 ├── requirements.txt 
 ├── packages.txt
 ├── unnamed-removebg-preview.png
