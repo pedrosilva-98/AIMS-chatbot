@@ -167,7 +167,7 @@ project-root/
 │   └── langfuse_function.py                 
 ├── docs/
 │   └── ARCHITECTURE.md
-├── gitignore    
+├── .gitignore    
 ├── requirements.txt 
 ├── packages.txt
 ├── unnamed-removebg-preview.png
