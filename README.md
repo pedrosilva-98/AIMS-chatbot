@@ -153,15 +153,26 @@ Streamlit Community Cloud: Hosting platform for the application
 
 ```
 project-root/
-├── PROJECT4.0.py          # Main application entry point
-├── services/              # Business logic layer
-├── tools/                 # Function calling tools
-├── utils/                 # Utility functions
+├── PROJECT4.0.py          # Main application
+├── assets/
+│   └── AIresponse.jpeg
+├── database/
+│   └── MongoDB_connection.py             
+├── tools/
+│   └── mongodb_rag.py   
+│   └── scrapping_tool.py                    
+├── utils/
+│   └── chat_history.py
+│   └── gemini_init_function.py
+│   └── langfuse_function.py                 
 ├── docs/
-│   └── ARCHITECTURE.md    # Architecture decisions and explanations
-├── requirements.txt       # Dependencies
-├── .env.example          # Environment variable template
-└── README.md             # This file
+│   └── ARCHITECTURE.md    
+├── requirements.txt 
+├── packages.txt
+├── unnamed-removebg-preview.png
+├── fundo verde com simbolo branco.png       
+├── .env.example         
+└── README.md             
 ```
 
 ## Team
@@ -169,15 +180,9 @@ project-root/
 - Bernardo: Integration of MongoDB and implementation of RAG.
 - Pedro: Responsible for Streamlit UI and Langfuse.
 - Inês: Deployment on Streamlit Cloud.
-
-
 ---
 
-## What Makes a Good README?
-
-Your README should answer:
 
 - **How** do I run it locally?
-- **Who** built it?
 
 
