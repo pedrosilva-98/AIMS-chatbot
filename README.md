@@ -139,7 +139,7 @@ Sidebar:
 AI:
 - Type the query
 
-<img src="assets/AIresponse.png" alt="Interface de Login" width="700">
+<img src="assets/AIresponse.jpeg" alt="Interface de Login" width="700">
 
 
 ## Deployment
