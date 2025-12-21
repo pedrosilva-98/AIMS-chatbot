@@ -26,11 +26,11 @@ def search_documents(query_text, collection, model):
                     "index": "vector_index"
                 }
             },
-            {"$project": {"_id": 0, "conteudo": 1, "score": {"$meta": "vectorSearchScore"}}}
+            {"$project": {"_id": 0, "conteudo_limpo": 1, "score": {"$meta": "vectorSearchScore"}}}
         ]
 
         results= collection.aggregate(pipeline)
-        return [doc['conteudo'] for doc in results]
+        return [doc['conteudo_limpo'] for doc in results]
     
     except Exception as e:
         print(f"Error during vector search: {e}")
