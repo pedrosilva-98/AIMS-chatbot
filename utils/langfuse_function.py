@@ -24,8 +24,6 @@ def generate_response_with_tools_and_langfuse(user_input, model_name, system_ins
     if api_key:
             genai.configure(api_key=api_key)
     
-
-    
     model = genai.GenerativeModel(
         model_name=model_name,
         tools=my_tools,

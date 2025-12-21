@@ -1,7 +1,6 @@
 import streamlit as st
 
 def get_gemini_history():
-    """Converte o histórico do Streamlit para o formato do Gemini"""
     gemini_history = []
     if "messages" in st.session_state:
         for msg in st.session_state["messages"]:
