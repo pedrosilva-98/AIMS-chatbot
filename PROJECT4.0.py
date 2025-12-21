@@ -637,7 +637,6 @@ else:
                         ATENÇÃO: Quando a pergunta for sobre ECTS deves retornar os ECTS aprovados:
                         - se a pergunta for ECTS feitos, ou aprovados
                         - se for ECTS inscritos deves responder aqueles ECTS em que o user está inscrito
-                        - Deves também seguir a ordem cronológica em todas as respostas (Se a resposta envolver anos deves responder pela seguinte ordem: 2022, 2023, 2024, 2025, 2026)
                         """
                         system_intstructions_final= f"{st.session_state.system_instruction}\n\n---\n\n{prompt_sistema}"
                         
