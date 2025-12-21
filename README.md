@@ -169,7 +169,8 @@ project-root/
 │   └── ARCHITECTURE.md
 ├── .gitignore    
 ├── requirements.txt
-├── 
+├── .devconteiner
+│   └── devconteiner.json
 ├── edgedriver_win64         #Run webscraping
 ├── packages.txt
 ├── unnamed-removebg-preview.png
