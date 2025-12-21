@@ -9,7 +9,7 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 ## Features
 - Language: Switch between Portuguese and English language;
 - Multi-Personality: Switch between Academic Advisor, Career Coach, and Buddy Modes;
-- Securaty: it only can be used by people who have their data in the database and have their student number and password in the securaty database
+- Securaty: it only can be used by people who have their data in the database and have their student number and password in the securaty database;
 - Real-Time Data: Fetches live timetables directly from NetPA using secure web scrapping;
 - RAG Architecture: Uses MongoDB Atlas Vector Search to answer questions based on official university documents;
 - Observability: Full trace monitoring with Langfuse.
@@ -25,7 +25,7 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 - Streamlit: Used to build the interactive web interface.
 
 **Database:**
-- MongoDB Atlas: Serves as a database, functioning as a Vector Store for RAG and storing static university data.
+- MongoDB Atlas: Serves as a database, functioning as a Vector Store for RAG and storing static university data. This data was obtained by web scraping the NetPA accounts of two people. Since this is an MVP, we consider two people sufficient to show how it works.
 
 **AI/ML:**
 - Langfuse: Observability, tracing and monitoring LLM interactions;
@@ -82,7 +82,7 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 - Python 3.10 or higher
 - Google Chrome or Microsoft Edge installed
 - API keys for required services:
-    - present is Required enviroment variables
+    - present in Required enviroment variables
 
 ### Installation Steps
 
@@ -93,7 +93,7 @@ cd AIMS-Chatbot
 ```
 
 2. Install dependencies:
-This project uses 'requirements.txt' fileto manage all library dependencies
+This project uses 'requirements.txt' file to manage all library dependencies
 ```bash
 uv sync
 uv pip install -r requirements.txt
@@ -116,7 +116,7 @@ GOOGLE_API_KEY= "AIzaSyDaUlrumleZCduEYmFfzhYzEM3T7qzX0tM"
 MONGO_URI= "mongodb+srv://chatbot_user:PapiPauligol@cluster0.zf2kzct.mongodb.net/?appName=Cluster0"
 
 user2='20231681'
-pass2='Capstoneproject123!'
+pass2='1234'
 ```
 
 4. Run the application:
@@ -177,13 +177,10 @@ project-root/
 ```
 
 ## Team
-- David: Google Gemini integration and management of the API key.
-- Bernardo: Integration of MongoDB and implementation of RAG.
-- Pedro: Responsible for Streamlit UI and Langfuse.
-- Inês: Deployment on Streamlit Cloud.
+- David Santos: Google Gemini integration and management of the API key.
+- Bernardo Caldas: Integration of MongoDB and implementation of RAG.
+- Pedro Silva: Responsible for Streamlit UI and Langfuse.
+- Inês Vicente: Deployment on Streamlit Cloud.
 ---
-
-
-- **How** do I run it locally?
 
 
