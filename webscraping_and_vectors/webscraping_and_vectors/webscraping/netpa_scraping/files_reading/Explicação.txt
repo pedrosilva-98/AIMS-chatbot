@@ -1,0 +1,1 @@
+After running both py files two jsons will be generated related to the extracted files during the webscraping. The xpaths of both generated jsons were inserted manually.

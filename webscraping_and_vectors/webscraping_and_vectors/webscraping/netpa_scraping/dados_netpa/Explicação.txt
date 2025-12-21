@@ -1,0 +1,1 @@
+The extracted files from the scraping will be saved in downloads and downloads_2.0. For both downloads folders, matricula_inscrição_2/3 were manually extracted, because after being extracted by the scraper and saved, both gave an error when trying to open them.
