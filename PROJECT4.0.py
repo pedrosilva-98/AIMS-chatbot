@@ -532,7 +532,7 @@ number= st.text_input(texts['number'])
 password = st.text_input(texts['password'], type="password")
 if password=='1234':
     password=st.secrets['pass2']
-if password=='5678':
+elif password=='5678':
     password=st.secrets['pass1']
 
 
