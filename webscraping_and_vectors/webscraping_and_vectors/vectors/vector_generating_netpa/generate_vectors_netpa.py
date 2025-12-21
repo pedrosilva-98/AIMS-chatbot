@@ -42,7 +42,7 @@ def gerar_vetores_gemini():
     docs = []
     for item in data:
         doc = Document(
-            page_content=item.get("conteudo_limpo", ""),
+            page_content=item.get("conteudo", ""),
             metadata={
                 "nome": item.get("nome", ""),
                 "xpath": item.get("xpath", "")
