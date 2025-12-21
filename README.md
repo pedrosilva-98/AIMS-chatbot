@@ -168,7 +168,9 @@ project-root/
 ├── docs/
 │   └── ARCHITECTURE.md
 ├── .gitignore    
-├── requirements.txt 
+├── requirements.txt
+├── 
+├── edgedriver_win64         #Run webscraping
 ├── packages.txt
 ├── unnamed-removebg-preview.png
 ├── fundo verde com simbolo branco.png       
