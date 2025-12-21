@@ -419,7 +419,7 @@ if language == "English":
         "current_personality": "Current Bot Personality",
         "info_title": "🔍 More Information",
         "netpa": "[🔗 **NetPA**](https://netpa.novaims.unl.pt)",
-        "email": "[📧 **Nova IMS Email**](https://mail.novaims.unl.pt)",
+        "email": "[📧 **Nova IMS Email**](https://outlook.office.com/mail/)",
         "password": "Enter your NetPA password:",
         "erro": "Waiting for user to enter a valid number and password..."
     }
@@ -443,7 +443,7 @@ else:
         "current_personality": "Personalidade Atual do Bot",
         "info_title": "🔍 Mais Informações",
         "netpa": "[🔗 **NetPA**](https://netpa.novaims.unl.pt)",
-        "email": "[📧 **Email Nova IMS**](https://mail.novaims.unl.pt)",
+        "email": "[📧 **Email Nova IMS**](https://outlook.office.com/mail/)",
         "password": "Escreve a tua password do NetPA:",
         "erro": "Aguardando usuário inserir um número e password válido..."
     }
@@ -549,9 +549,9 @@ gemini_client=init_gemini_client()
 
 mongo_client= init_connection_mongo()
 if number and str(number) in dic.keys() and password == dic[str(number)]:
-    collection = mongo_client["Projeto_curso"][str(number)]
+    collection = mongo_client["Capstone_project"][str(number)]
 else:
-    collection = mongo_client["Projeto_curso"]["temp"]
+    collection = mongo_client["Capstone_project"]["temp"]
 
 
 embedding_model= load_embedding_model()
