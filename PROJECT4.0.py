@@ -549,9 +549,9 @@ gemini_client=init_gemini_client()
 
 mongo_client= init_connection_mongo()
 if number and str(number) in dic.keys() and password == dic[str(number)]:
-    collection = mongo_client["Capstone_project"][str(number)]
+    collection = mongo_client["Projeto_curso"][str(number)]
 else:
-    collection = mongo_client["Capstone_project"]["temp"]
+    collection = mongo_client["Projeto_curso"]["temp"]
 
 
 embedding_model= load_embedding_model()
@@ -634,9 +634,7 @@ else:
                         ATENÇÂO: TODAS AS PERGUNTAS QUE ENVOLVEREM DAR OS DIAS DA SEMANA DEVES DÁ-LOS POR ORDEM.
                         A ordem é a seguinte [Segunda-feira, Terça-feira, Quarta-feira, Quinta-feira, Sexta-feira] ou [Monday, Tuesday, Wednesday, Thursday, Friday]
                         Segue sempre ista ordem para qualquer pergunta em que a resposta envolva mais do que um dia, esta informação deve ser prioritária à organizçaõ por hora.
-                        ATENÇÃO: Quando a pergunta for sobre ECTS deves retornar os ECTS aprovados:
-                        - se a pergunta for ECTS feitos, ou aprovados
-                        - se for ECTS inscritos deves responder aqueles ECTS em que o user está inscrito
+                        ATENÇÂO: Quando a pergunta envolver ECTS feitos, deves responder com os ECTS que estão aprovados. Se a pergunta for ECTS inscritos deves responder todos os ECTS que a pessoa está inscrita.
                         """
                         system_intstructions_final= f"{st.session_state.system_instruction}\n\n---\n\n{prompt_sistema}"
                         
