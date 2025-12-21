@@ -204,7 +204,7 @@ project-root/
 ├── unnamed-removebg-preview.png
 ├── fundo verde com simbolo branco.png       
 ├── .env.example         
-├── README.md           
+└── README.md           
 ```
 
 ## Team
