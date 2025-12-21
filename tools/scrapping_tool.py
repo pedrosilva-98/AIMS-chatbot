@@ -31,7 +31,7 @@ def scrape_horario(number, password):
     extracted_data = [] 
     try:
 
-        print("[Bot] A iniciar browser...")
+        print("A iniciar browser...")
         driver.get('https://netpa.novaims.unl.pt/netpa/page?stage=difhomestage')
         
         try: WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.ID, "notificacoesNetpa_OK-btnEl"))).click()
@@ -39,7 +39,7 @@ def scrape_horario(number, password):
         try: WebDriverWait(driver, 2).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(text(), 'Aceitar todos')]"))).click()
         except: pass
 
-        print("[Bot] Login...")
+        print("Login...")
         WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "loginregisterLink"))).click()
         WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, "//input[contains(@placeholder, 'utilizador')]"))).send_keys(str(number))
         driver.find_element(By.XPATH, "//input[contains(@placeholder, 'palavra-chave')]").send_keys(str(password))
@@ -47,12 +47,12 @@ def scrape_horario(number, password):
         driver.execute_script("arguments[0].click();", WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Entrar')]"))))
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "menuItemLink")))
         
-        print("[Bot] A abrir Horário...")
+        print("A abrir Horário...")
         link = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//a[contains(text(), 'Horário')]")))
         driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", link)
         driver.execute_script("arguments[0].click();", link)
 
-        print("⏳ [Bot] A ler grelha...")
+        print("A ler grelha...")
         
         table_element = WebDriverWait(driver, 15).until(
             EC.presence_of_element_located((By.ID, "tabhorarionew"))

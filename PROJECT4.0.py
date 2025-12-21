@@ -526,7 +526,7 @@ if st.sidebar.button(texts['clear_chat']):
 
 
 
-#DEFINIR VARIAVEIS
+#VARIABLES
 name = st.text_input(texts['name'])
 number= st.text_input(texts['number'])
 password = st.text_input(texts['password'], type="password")
@@ -537,13 +537,13 @@ if password=='1234':
 
 load_dotenv()
 
-########################### GEMINI API CONNECTION ##########################
+######################################## GEMINI API CONNECTION ####################################
 api_key= st.secrets["GOOGLE_API_KEY"]
 gemini_client=init_gemini_client()
 
 
 
-########################## MONGO DB CONECTION ######################
+######################################## MONGO DB CONECTION #######################################
 
 mongo_client= init_connection_mongo()
 if number and str(number) in dic.keys() and password == dic[str(number)]:
@@ -587,15 +587,15 @@ def get_horario_atualizado_tool():
     return scrape_horario(number, password)
 
 
-################################### LANGFUSE ################################
+########################################## LANGFUSE ################################################
 langfuse_secret_key = st.secrets['langfuse_secret_key']
 langfuse_public_key = st.secrets['langfuse_public_key']
 langfuse_host = st.secrets['langfuse_host']
 
 my_tools=[mongdb, get_horario_atualizado_tool]
 
-#PARTE DAS RESPOSTAS AO CLIENTE
 
+#RESPONSE
 
 if "messages" not in st.session_state:
     st.session_state["messages"]=[]
