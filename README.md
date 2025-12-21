@@ -114,9 +114,11 @@ langfuse_host = "https://cloud.langfuse.com"
 GOOGLE_API_KEY= "AIzaSyDaUlrumleZCduEYmFfzhYzEM3T7qzX0tM"
 
 MONGO_URI= "mongodb+srv://chatbot_user:PapiPauligol@cluster0.zf2kzct.mongodb.net/?appName=Cluster0"
-
+user1='20231675'
 user2='20231681'
+pass1='5678'
 pass2='1234'
+#This password is not real, so the web scraping tool will not function locally. You can test this feature using the 'Live Application'. This is the best way we found to maintain security while enabling professors to test all of our tools.
 ```
 
 4. Run the application:
@@ -127,9 +129,9 @@ uv run streamlit run PROJECT4.0.py
 ## Usage
 
 Authentication: 
-- Name: your name
-- Student Number: Enter a valid student number from the database
-- Password: Enter the corresponding password
+- Name: your name 
+- Student Number: Enter a valid student number from the database (You have to enter the number 20231681 or 20231675 since they are the only ones that are in the database)
+- Password: Enter the corresponding password (The password must be the ones in the 'Required enviroments variables')
 
 Sidebar:
 - Language: switch language
