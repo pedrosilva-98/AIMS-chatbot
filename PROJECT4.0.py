@@ -422,6 +422,7 @@ if language == "English":
         "email": "[📧 **Nova IMS Email**](https://outlook.office.com/mail/)",
         "password": "Enter your NetPA password:",
         "erro": "Waiting for user to enter a valid number and password..."
+        
     }
 else:
     st.session_state.language = "pt"
@@ -446,6 +447,7 @@ else:
         "email": "[📧 **Email Nova IMS**](https://outlook.office.com/mail/)",
         "password": "Escreve a tua password do NetPA:",
         "erro": "Aguardando usuário inserir um número e password válido..."
+        
     }
 
 
@@ -563,6 +565,7 @@ def mongdb(user_query:str):
     Pesquisa informações especificas sobre notas, ECTS, coisas em especificas sobre a universidade presente na base de dados MongoDB
     Utiliza esta ferramenta sempre que o utilizador fizer perguntas sobre conteúdos especificos, regras ou dados.
     Quando a pergunta é referente a horários não utilzes esta tool.
+    Deves usar esta tool caso a pergunta envolva algo como, pagamentos, propinas ou dividas.
 
     Args: 
         user_query (str): A pergunta do utilizador.
@@ -621,10 +624,10 @@ else:
                     
                         prompt_sistema = f"""
                         És um assistente da NOVA IMS. Tens acesso a ferramentas para consultar a documentação do projeto.
-                        Usa a ferramenta 'retrieve_context' sempre que a pergunta exigir conhecimento específico sobre cursos, a universidade ou outras informações relacionas com isso.
+                        Usa a ferramenta 'retrieve_context' sempre que a pergunta exigir conhecimento específico sobre cursos, a universidade, notas, créditos, cadeiras, dividas, propinas e pagamentos.
                         Quando a pergunta é referente a horários utiliza a ferramenta 'get_horario_atualizado_tool'.
-                        Se não encontrares informação disponivel  em nenhuma das outras tools usa o gemini para responder, mas apenas para perguntas relacionadas com universidade, mesmo que sejam outars funcionaliadades ou outras universidades.
-                        Para perguntas relacionadas com algo relacionada a universidade faz uma pesquisa detalhada.
+                        ATENÇÂO: Se não encontrares informação disponivel  em nenhuma das outras tools usa responde, mas apenas para perguntas relacionadas com universidade, mesmo que sejam outars funcionaliadades ou outras universidades.
+                        ATENÇÂO: Para perguntas relacionadas com algo relacionada a universidade faz uma pesquisa detalhada.
                         Se a pergunta for genérica (ex: "Olá"), não uses a ferramenta.
                         Pergunta: {user_input}
                         Idioma da resposta: {language}

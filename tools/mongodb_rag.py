@@ -22,7 +22,7 @@ def search_documents(query_text, collection, model):
                     "queryVector": query_vector,
                     "path": "embedding", 
                     "numCandidates": 100,
-                    "limit": 4,
+                    "limit": 10,
                     "index": "vector_index"
                 }
             },
