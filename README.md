@@ -7,9 +7,10 @@ AIMS: Your Intelligent Campus Companion at NOVA IMS
 AIMS is a comprehensive AI-powered virtual assistant designed to streamline the academic experience for Nova IMS students. Powered by Google Gemini and MongoDB Atlas, it utilizes RAG to answer administrative and academic queries with precison. It features a secure , real-time integration with NetPA to retrieve personalized timetables and offers dynamic integration modes, ensuring students have instant access to the information they need, when they need.
 
 ## Features
+- Web Scraping: we scraped the NetPA to extract relevant information from each link of the website. And stored it in MongoDB Atlas.
 - Language: Switch between Portuguese and English language;
 - Multi-Personality: Switch between Academic Advisor, Career Coach, and Buddy Modes;
-- Securaty: it only can be used by people who have their data in the database and have their student number and password in the securaty database;
+- Security: it only can be used by people who have their data in the database and have their student number and password in the securaty database;
 - Real-Time Data: Fetches live timetables directly from NetPA using secure web scrapping;
 - RAG Architecture: Uses MongoDB Atlas Vector Search to answer questions based on official university documents;
 - Observability: Full trace monitoring with Langfuse.
@@ -104,7 +105,7 @@ uv pip install -r requirements.txt
 cp .env.example .env
 # Past the Requirement variables 
 ```
-
+This is to run the locally the code
 **Required environment variables:**
 ```
 langfuse_secret_key = "sk-lf-57db3c7c-b936-4b93-8a29-65458665be94"
@@ -131,7 +132,7 @@ uv run streamlit run PROJECT4.0.py
 Authentication: 
 - Name: your name 
 - Student Number: Enter a valid student number from the database (You have to enter the number 20231681 or 20231675 since they are the only ones that are in the database)
-- Password: Enter the corresponding password (The password must be the ones in the 'Required enviroments variables')
+- Password: Enter the corresponding password (The password must be the ones in the 'Required enviroments variables', pass1 is for user1 and pass2 is for user2)
 
 Sidebar:
 - Language: switch language
@@ -140,10 +141,11 @@ Sidebar:
 
 AI:
 - Type the query
+- Submit the query
 
 <img src="assets/AIresponse.jpeg" alt="Interface de Login" width="700">
 
-
+This image demonstrates that the question was regarding the schedule and that he provided a response, as classes were still being held during the week the question was raised. 
 ## Deployment
 
 **Live Application:** [(https://aims-chatbot.streamlit.app/)]
