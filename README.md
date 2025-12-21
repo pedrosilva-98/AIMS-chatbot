@@ -173,15 +173,38 @@ project-root/
 ├── requirements.txt
 ├── .devconteiner
 │   └── devconteiner.json
+├── webscraping_and_vectors/
+│   └── vectors/
+|       └── vector_generating_netpa/
+|           └── generate_vectors_netpa.py
+|           └── generate_vectors_netpa_2.0.py
+|       └── vector_generating_netpa_files/
+|           └── generate_vectors_files.py
+|           └── generate_vectors_files_2.0.py
+│   └── webscraping/
+|       └── cleaning/
+|           └── netpa_btns/
+|               └── # Here will happear the cleaned jsons from netpa
+|           └── cleaned_json.ipynb
+|       └── netpa_scraping/
+|           └── dados_netpa/
+|               └── downloads/
+|                   └── # Extracted files from netpa_1.0
+|               └── downloads_2.0/
+|                   └── # Extracted files from netpa_2.0
+|               └── Explicação.txt # Some explanations about decisions that we made in this step
+|           └── files_reading/
+|               └── Explicação.txt # Some explanations about decisions that we made in this step
+|               └── process_files_from_netpa.py
+|               └── process_files_from_netpa_2.0.py
+|           └── netpa_1.0.ipynb
+|           └── netpa_2.0.ipynb
 ├── edgedriver_win64         #Run webscraping
 ├── packages.txt
 ├── unnamed-removebg-preview.png
 ├── fundo verde com simbolo branco.png       
 ├── .env.example         
-├── README.md
-└── webscraping_and_vectors
-│   └──
-│   └──           
+├── README.md           
 ```
 
 ## Team
