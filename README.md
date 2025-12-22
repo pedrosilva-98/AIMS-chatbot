@@ -53,16 +53,16 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 
 ### Layer Structure
 
-## UI Layer: 
+#### UI Layer: 
 - Streamlit: handles user input, chat session state management and manages authentication via student number/ password verification.
 
-## Service Layer: 
+#### Service Layer: 
 Initializates connections, manages the chat history and coordinates the flow between UI and AI.
 
-## AI Layer: 
+#### AI Layer: 
 - Google Gemini: manages system prompts, handles context window limits and integrates Langfuse for tracing and monitoring model performance. (gemini_init_function.py, langfuse_function.py)
 
-## Tools Layer: 
+#### Tools Layer: 
 - Vector Store: MongoDB Atlas stores embedding of Nova IMS documents for RAG operations (mongodb_rag.py)
 - Web Scraper: Selenium based tool that performs real-time authentication on the NetPA portal to retrieve live schedule data. (scrapping_tool.py)
 
