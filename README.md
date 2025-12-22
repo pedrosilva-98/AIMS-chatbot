@@ -9,8 +9,8 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 ## Features
 - Web Scraping: we scraped the NetPA to extract relevant information from each link of the website. And stored it in MongoDB Atlas.
 - Language: Switch between Portuguese and English language;
-- Multi-Personality: Switch between Academic Advisor, Career Coach, and Buddy Modes;
-- Security: it only can be used by people who have their data in the database and have their student number and password in the securaty database;
+- Multi-Personality: Switch between Academic Advisor, Career Coach, Administrative Assistant, and Buddy Modes;
+- Security: it only can be used by people who have their data in the database and have their student number and password in the security database;
 - Real-Time Data: Fetches live timetables directly from NetPA using secure web scrapping;
 - RAG Architecture: Uses MongoDB Atlas Vector Search to answer questions based on official university documents;
 - Observability: Full trace monitoring with Langfuse.
@@ -39,7 +39,7 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 ### AIMS - Architecture
 
     User[Student] --> (interects) UI[Streamlit Frontend]
-    UI --> (sendes query) Logic[Python Backend]
+    UI --> (sende query) Logic[Python Backend]
     Logic --> (invokes) LLM[Google Gemini API]
     LLM --> (decision tool) Router{Tool Router}
 
@@ -53,17 +53,18 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 
 ### Layer Structure
 
-    UI Layer: 
-    - Streamlit: handles user input, chat session state management and manages authentication via student number/ password verification.
+## UI Layer: 
+- Streamlit: handles user input, chat session state management and manages authentication via student number/ password verification.
 
-    Service Layer: Initializates connections, manages the chat history and coordinates the flow between UI and AI.
+## Service Layer: 
+Initializates connections, manages the chat history and coordinates the flow between UI and AI.
 
-    AI Layer: 
-    - Google Gemini: manages system prompts, handles context window limits and integrates Langfuse for tracing and monitoring model performance. (gemini_init_function.py, langfuse_function.py)
+## AI Layer: 
+- Google Gemini: manages system prompts, handles context window limits and integrates Langfuse for tracing and monitoring model performance. (gemini_init_function.py, langfuse_function.py)
 
-    Tools Layer: 
-    - Vector Store: MongoDB Atlas stores embedding of Nova IMS documents for RAG operations (mongodb_rag.py)
-    - Web Scraper: Selenium based tool that performs real-time authentication on the NetPA portal to retrieve live schedule data. (scrapping_tool.py)
+## Tools Layer: 
+- Vector Store: MongoDB Atlas stores embedding of Nova IMS documents for RAG operations (mongodb_rag.py)
+- Web Scraper: Selenium based tool that performs real-time authentication on the NetPA portal to retrieve live schedule data. (scrapping_tool.py)
 
 ### Key Design Decisions and Justifications
 
@@ -71,7 +72,7 @@ AIMS is a comprehensive AI-powered virtual assistant designed to streamline the 
 
 - MongoDB as Vector Store: we chose it because it handles standard NoSQL data and vector embeddings, avoiding a separate database just for vectors.
 
-- Sreamlit: we chose it for its rapida development capabilities and native Python integration.
+- Sreamlit: we chose it for its simple development capabilities and native Python integration.
 
 - Selenium: utilizes Chromium drivers to ensure the application functions correctly on Streamlit Cloud (Linux)
 
@@ -137,7 +138,7 @@ Authentication:
 Sidebar:
 - Language: switch language
 - Personality: switch chatbot personality
-- External links: Quich access to NetPA and NOVA IMS webmail
+- External links: Give access to NetPA and NOVA IMS webmail
 
 AI:
 - Type the query
@@ -146,6 +147,13 @@ AI:
 <img src="assets/AIresponse.jpeg" alt="Interface de Login" width="700">
 
 This image demonstrates that the question was regarding the schedule and that he provided a response, as classes were still being held during the week the question was raised. 
+## Exemples of queries:
+- What is my current average?
+- How many ECTS credits have I completed?
+- What is my timetable for this week?
+- How many ECTS is the Text Mining course worth?
+- Do I have any outstanding fees?
+
 ## Deployment
 
 **Live Application:** [(https://aims-chatbot.streamlit.app/)]
