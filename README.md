@@ -106,22 +106,6 @@ uv pip install -r requirements.txt
 cp .env.example .env
 # Past the Requirement variables 
 ```
-This is to run the locally the code
-**Required environment variables:**
-```
-langfuse_secret_key = "sk-lf-57db3c7c-b936-4b93-8a29-65458665be94"
-langfuse_public_key = "pk-lf-3e54915a-9181-4623-b71b-b560a740604d"
-langfuse_host = "https://cloud.langfuse.com"
-
-GOOGLE_API_KEY= "AIzaSyDaUlrumleZCduEYmFfzhYzEM3T7qzX0tM"
-
-MONGO_URI= "mongodb+srv://chatbot_user:PapiPauligol@cluster0.zf2kzct.mongodb.net/?appName=Cluster0"
-user1='20231675'
-user2='20231681'
-pass1='5678'
-pass2='1234'
-#This password is not real, so the web scraping tool will not function locally. You can test this feature using the 'Live Application'. This is the best way we found to maintain security while enabling professors to test all of our tools.
-```
 
 4. Run the application:
 ```bash
