@@ -116,8 +116,8 @@ uv run streamlit run PROJECT4.0.py
 
 Authentication: 
 - Name: your name 
-- Student Number: Enter a valid student number from the database (You have to enter the number 20231681 or 20231675 since they are the only ones that are in the database)
-- Password: Enter the corresponding password (The password must be the ones in the 'Required enviroments variables', pass1 is for user1 and pass2 is for user2)
+- Student Number: Enter a valid student number from the database 
+- Password: Enter the corresponding password 
 
 Sidebar:
 - Language: switch language
